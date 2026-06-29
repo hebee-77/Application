@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="hero-visual">
-      <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80" alt="Food delivery agent on time" class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80" alt="Fresh burger on table" class="hero-photo">
       <div class="float-pill eta">12 min away</div>
       <div class="float-pill live"><span class="dot"></span>Live</div>
     </div>
@@ -78,10 +78,8 @@
       <h3>Browse restaurants</h3>
       <p>Discover places near you, sorted by what you're craving.</p>
     </div>
-    <div class="card delivery plain">
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      </div>
+    <div class="card delivery">
+      <div class="card-photo"></div>
       <h3>Fast delivery</h3>
       <p>Hot food, on time, every time.</p>
     </div>
