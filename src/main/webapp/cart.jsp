@@ -191,15 +191,33 @@
           </div>
         </div>
 
-        <div class="summary-card">
-          <div class="summary-card-header">
-            <h2>Delivery address</h2>
-            <a href="#" class="link-text">Change</a>
-          </div>
-          <p class="address-text"></p>
-        </div>
-
         <form action="${pageContext.request.contextPath}/checkout" method="post">
+          <div class="summary-card address-card">
+            <div class="summary-card-header">
+              <div class="header-title-group" style="display: flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B5E20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <h2 style="margin: 0; font-size: 15px; font-weight: 800; color: #14201A;">Delivery address</h2>
+              </div>
+              <button type="button" class="link-text-btn" id="changeAddressBtn" style="font-size: 13px; font-weight: 700; color: #1B5E20; cursor: pointer;">Change</button>
+            </div>
+
+            <div id="addressViewSection" style="padding: 10px 14px; background: #FAFDF8; border: 1.5px dashed rgba(27,94,32,0.25); border-radius: 12px; margin-top: 10px; transition: all 0.2s ease;">
+              <p class="address-text" id="addressDisplay" style="margin: 0; font-size: 13px; line-height: 1.5; color: #2D3B34; font-weight: 500;">221B Baker Street, Camden, London NW1 6XE</p>
+            </div>
+
+            <div id="addressEditSection" style="display: none; margin-top: 10px;">
+              <div class="textarea-wrapper" style="position: relative;">
+                <textarea name="address" id="addressInput" class="address-textarea" rows="3" placeholder="Enter full delivery address with landmark..." style="width: 100%; padding: 12px 14px; border: 1.5px solid #81C784; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; line-height: 1.5; color: #14201A; background: #FFFFFF; outline: none; resize: vertical; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(27,94,32,0.06);">221B Baker Street, Camden, London NW1 6XE</textarea>
+              </div>
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                <button type="button" class="btn-save-address" id="saveAddressBtn" style="background: linear-gradient(135deg, #2E7D32, #1B5E20); color: #ffffff; font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 999px; border: none; cursor: pointer; box-shadow: 0 3px 8px rgba(27,94,32,0.25); transition: all 0.15s ease;">Save Address</button>
+              </div>
+            </div>
+          </div>
+
           <div class="summary-card">
             <h2>Payment method</h2>
             <label class="payment-option">
@@ -247,6 +265,56 @@
       if (userProfileDropdown && !userProfileDropdown.contains(e.target)) {
         profileBtn.setAttribute('aria-expanded', 'false');
         dropdownMenu.classList.remove('show');
+      }
+    });
+  }
+
+  // Delivery Address inline editing
+  var changeAddressBtn = document.getElementById('changeAddressBtn');
+  var addressViewSection = document.getElementById('addressViewSection');
+  var addressEditSection = document.getElementById('addressEditSection');
+  var addressInput = document.getElementById('addressInput');
+  var addressDisplay = document.getElementById('addressDisplay');
+  var saveAddressBtn = document.getElementById('saveAddressBtn');
+
+  if (changeAddressBtn && addressInput) {
+    function toggleEditMode() {
+      var isEditing = addressEditSection.style.display !== 'none';
+      if (isEditing) {
+        addressEditSection.style.display = 'none';
+        addressViewSection.style.display = 'block';
+        changeAddressBtn.textContent = 'Change';
+        if (addressInput.value.trim() !== '') {
+          addressDisplay.textContent = addressInput.value;
+        } else {
+          addressInput.value = addressDisplay.textContent;
+        }
+      } else {
+        addressEditSection.style.display = 'block';
+        addressViewSection.style.display = 'none';
+        changeAddressBtn.textContent = 'Cancel';
+        addressInput.focus();
+        addressInput.select();
+      }
+    }
+
+    changeAddressBtn.addEventListener('click', toggleEditMode);
+    if (addressDisplay) {
+      addressDisplay.addEventListener('click', toggleEditMode);
+      addressDisplay.style.cursor = 'pointer';
+      addressDisplay.title = 'Click to edit address';
+    }
+    if (saveAddressBtn) {
+      saveAddressBtn.addEventListener('click', function() {
+        if (addressInput.value.trim() !== '') {
+          addressDisplay.textContent = addressInput.value;
+        }
+        toggleEditMode();
+      });
+    }
+    addressInput.addEventListener('input', function() {
+      if (addressInput.value.trim() !== '') {
+        addressDisplay.textContent = addressInput.value;
       }
     });
   }
