@@ -196,7 +196,7 @@
             <h2>Delivery address</h2>
             <a href="#" class="link-text">Change</a>
           </div>
-          <p class="address-text">221B Baker Street, Camden, London NW1 6XE</p>
+          <p class="address-text"></p>
         </div>
 
         <form action="${pageContext.request.contextPath}/checkout" method="post">
