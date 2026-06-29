@@ -32,7 +32,7 @@ body {
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; margin: 0; }
 
-.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+.wrap { width: 100%; max-width: 100%; padding: 0 clamp(20px, 4vw, 60px); margin: 0 auto; }
 
 /* ── Header ─────────────────────────────────────────────── */
 .site-header {
@@ -43,7 +43,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: sticky; top: 0; z-index: 50;
 }
 .site-header nav {
-  max-width: 860px; margin: 0 auto; padding: 0 20px;
+  width: 100%; max-width: 100%; padding: 0 clamp(20px, 4vw, 60px); margin: 0 auto;
   height: 64px; display: flex; align-items: center; gap: 24px;
 }
 

@@ -32,7 +32,7 @@ body {
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; margin: 0; }
 
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+.wrap { width: 100%; max-width: 100%; padding: 0 clamp(20px, 4vw, 60px); margin: 0 auto; }
 
 /* ── Header ─────────────────────────────────────────────── */
 .site-header {
@@ -150,8 +150,8 @@ a.back-link svg { width: 16px; height: 16px; }
 /* ── Cart Grid ──────────────────────────────────────────── */
 .cart-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 28px;
+  grid-template-columns: 1fr minmax(320px, 400px);
+  gap: 32px;
   align-items: start;
 }
 
