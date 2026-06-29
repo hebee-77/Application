@@ -2,7 +2,7 @@
 
   /* Mobile nav toggle */
   var navToggle = document.getElementById('navToggle');
-  var navLinks = document.getElementById('navLinks');
+  var navLinks  = document.getElementById('navLinks');
   if(navToggle && navLinks){
     navToggle.addEventListener('click', function(){
       navLinks.classList.toggle('open');
@@ -15,15 +15,15 @@
   }
 
   /* User profile dropdown */
-  var profileBtn = document.getElementById('profileAvatarBtn');
-  var dropdownMenu = document.getElementById('dropdownMenu');
+  var profileBtn         = document.getElementById('profileAvatarBtn');
+  var dropdownMenu       = document.getElementById('dropdownMenu');
   var userProfileDropdown = document.getElementById('userProfileDropdown');
 
   if(profileBtn && dropdownMenu){
     profileBtn.addEventListener('click', function(event){
       event.stopPropagation();
       var isExpanded = profileBtn.getAttribute('aria-expanded') === 'true';
-      profileBtn.setAttribute('aria-expanded', !isExpanded);
+      profileBtn.setAttribute('aria-expanded', String(!isExpanded));
       dropdownMenu.classList.toggle('show');
     });
 
@@ -43,46 +43,74 @@
   }
 
   /* Stepper controls (- and + buttons) */
-  var minusBtns = document.querySelectorAll('.btn-minus');
-  var plusBtns = document.querySelectorAll('.btn-plus');
-
-  minusBtns.forEach(function(btn){
+  document.querySelectorAll('.btn-minus').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var input = btn.parentElement.querySelector('.qty-input');
+      var input = btn.closest('.qty-stepper').querySelector('.qty-input');
       if(input){
-        var val = parseInt(input.value) || 1;
-        if(val > 1){
-          input.value = val - 1;
-        }
+        var val = parseInt(input.value, 10) || 1;
+        if(val > 1) input.value = val - 1;
       }
     });
   });
 
-  plusBtns.forEach(function(btn){
+  document.querySelectorAll('.btn-plus').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var input = btn.parentElement.querySelector('.qty-input');
+      var input = btn.closest('.qty-stepper').querySelector('.qty-input');
       if(input){
-        var val = parseInt(input.value) || 1;
+        var val = parseInt(input.value, 10) || 1;
         input.value = val + 1;
       }
     });
   });
 
-  /* Dynamic cart bar display logic */
+  /* Cart bar */
   var cartBar = document.getElementById('cartBar');
-  
-  // Show cart bar if item was previously added in session
-  if(cartBar && sessionStorage.getItem('bitehouse_has_added_item') === 'true'){
+
+  function showCartBar(){
+    sessionStorage.setItem('bitehouse_cart_active', 'true');
+    if(cartBar) cartBar.classList.add('show');
+  }
+
+  // Persist cart bar if user already added something this session
+  if(cartBar && sessionStorage.getItem('bitehouse_cart_active') === 'true'){
     cartBar.classList.add('show');
   }
 
-  var itemForms = document.querySelectorAll('.menu-item-control');
-  itemForms.forEach(function(form){
-    form.addEventListener('submit', function(){
-      sessionStorage.setItem('bitehouse_has_added_item', 'true');
-      if(cartBar){
-        cartBar.classList.add('show');
-      }
+  /* Add-to-cart via AJAX — keeps user on page, updates DB, shows cart bar */
+  document.querySelectorAll('.menu-item-control').forEach(function(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var formData = new FormData(form);
+      var btn = form.querySelector('.btn-add');
+
+      // Visual feedback
+      if(btn){ btn.textContent = 'Adding…'; btn.disabled = true; }
+
+      fetch(form.action, {
+        method : 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body   : formData
+      })
+      .then(function(res){
+        if(res.ok) return res.json();
+        throw new Error('Server error ' + res.status);
+      })
+      .then(function(data){
+        if(data && data.success){
+          showCartBar();
+          if(btn){ btn.textContent = 'Added ✓'; }
+          setTimeout(function(){ if(btn){ btn.textContent = 'Add'; btn.disabled = false; } }, 1500);
+        } else {
+          throw new Error('Unexpected response');
+        }
+      })
+      .catch(function(err){
+        console.error('Add to cart error:', err);
+        // Fallback: if not logged in, server may redirect — handle gracefully
+        if(btn){ btn.textContent = 'Sign in to add'; btn.disabled = false; }
+        setTimeout(function(){ if(btn){ btn.textContent = 'Add'; } }, 2000);
+      });
     });
   });
 

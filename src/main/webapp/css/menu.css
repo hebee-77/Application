@@ -514,91 +514,104 @@ nav {
   color: var(--green-dark);
 }
 
-.menu-item-control {
-  flex-shrink: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
+/* --- Menu item controls: use element+class for high specificity --- */
+form.menu-item-control {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
 }
 
 .qty-stepper {
-  display: inline-flex !important;
-  align-items: center !important;
-  background: var(--surface) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius-pill) !important;
-  padding: 3px 6px !important;
-  box-shadow: 0 1px 3px rgba(20, 32, 26, 0.05) !important;
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px 6px;
+  box-shadow: 0 1px 3px rgba(20, 32, 26, 0.05);
+  gap: 2px;
 }
 
-.stepper-btn {
-  width: 28px !important;
-  height: 28px !important;
-  border-radius: 50% !important;
-  background: var(--surface-tint) !important;
-  color: var(--green-dark) !important;
-  border: 1px solid rgba(76, 175, 80, 0.3) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  user-select: none !important;
-  line-height: 1 !important;
-  padding: 0 !important;
-  margin: 0 !important;
+button.stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface-tint);
+  color: var(--green-dark);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
 }
 
-.stepper-btn:hover {
-  background: var(--green-dark) !important;
-  color: #FFFFFF !important;
-  border-color: var(--green-dark) !important;
-  transform: scale(1.05) !important;
+button.stepper-btn:hover {
+  background: var(--green-dark);
+  color: #FFFFFF;
+  border-color: var(--green-dark);
 }
 
-.qty-input {
-  width: 32px !important;
-  text-align: center !important;
-  border: none !important;
-  background: transparent !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  color: var(--text) !important;
-  font-family: inherit !important;
-  -moz-appearance: textfield !important;
-  outline: none !important;
-  margin: 0 2px !important;
-  padding: 0 !important;
+input.qty-input {
+  width: 32px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: inherit;
+  -moz-appearance: textfield;
+  outline: none;
+  margin: 0 2px;
+  padding: 0;
 }
 
-.qty-input::-webkit-outer-spin-button,
-.qty-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0 !important;
+input.qty-input::-webkit-outer-spin-button,
+input.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.btn-add {
-  background: var(--surface) !important;
-  border: 1.5px solid var(--green-dark) !important;
-  color: var(--green-dark) !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  padding: 8px 18px !important;
-  border-radius: var(--radius-pill) !important;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
+button.btn-add {
+  background: var(--surface);
+  border: 1.5px solid var(--green-dark);
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 
-.btn-add:hover {
-  background: var(--green-dark) !important;
-  color: #FFFFFF !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2) !important;
+button.btn-add:hover {
+  background: var(--green-dark);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+}
+
+button.btn-add:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
 }
 
 /* ---------- Sticky cart bar ---------- */
@@ -609,7 +622,7 @@ nav {
   bottom: 0;
   background: var(--green-dark);
   color: #FFFFFF;
-  display: none !important;
+  display: flex;              /* always flex; hidden via transform */
   align-items: center;
   justify-content: center;
   padding: 16px 24px;
@@ -618,13 +631,14 @@ nav {
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   box-shadow: 0 -8px 24px rgba(20, 32, 26, 0.18);
   z-index: 20;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(110%);   /* hidden off-screen by default */
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
 .cart-bar.show {
-  display: flex !important;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .cart-bar-link {

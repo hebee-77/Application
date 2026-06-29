@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.DAOImpl.RestaurantDAOImpl;
+import com.Model.Restaurant;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,14 +27,13 @@ public class RestaurantsServlet extends HttpServlet {
 
 			return;
 		}
-		
+
 		RestaurantDAOImpl dao = new RestaurantDAOImpl();
-		
-		List restaurants = dao.getAllRestaurants();
-		
+
+		List<Restaurant> restaurants = dao.getAllRestaurants();
+
 		req.setAttribute("restaurants", restaurants);
-		
-		
+
 		req.getRequestDispatcher("restaurants.jsp").forward(req, resp);
 
 	}
