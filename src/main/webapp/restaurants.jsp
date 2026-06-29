@@ -123,7 +123,8 @@ if (loggedInUser != null) {
 			%>
 
 			<a
-				href="${pageContext.request.contextPath}/menu?id=<%=restaurant.getRestaurantId()%>&name=<%=restaurant.getName()%>">
+				href="${pageContext.request.contextPath}/menu?id=<%=restaurant.getRestaurantId()%>&name=<%=restaurant.getName()%>"
+				class="r-card" data-category="<%=restaurant.getCuisine()%>">
 
 				<div class="r-card-photo"
 					style="background-image: url('<%=restaurant.getImagePath()%>') ">

@@ -261,17 +261,22 @@ nav {
 }
 
 .r-card {
+	display: flex;
+	flex-direction: column;
 	background: var(--surface);
-	border: 1px solid var(--border);
+	border: 1.5px solid rgba(20, 32, 26, 0.16) !important;
 	border-radius: var(--radius-lg);
 	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(20, 32, 26, 0.06);
-	transition: transform 0.15s ease, box-shadow 0.15s ease;
+	box-shadow: 0 4px 14px rgba(20, 32, 26, 0.05);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+	text-decoration: none;
+	color: inherit;
 }
 
 .r-card:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 10px 24px rgba(20, 32, 26, 0.12);
+	border-color: rgba(76, 175, 80, 0.5) !important;
+	box-shadow: 0 12px 28px rgba(20, 32, 26, 0.12);
 }
 
 .r-card.is-hidden {
