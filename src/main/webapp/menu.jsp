@@ -142,22 +142,27 @@
                 for (Dish dish : dishes) {
                 %>
 
-                <div class="menu-item" data-item-id="classic-cheeseburger">
+                <div class="menu-item" data-item-id="<%=dish.getDishId()%>">
                   <div class="menu-item-photo" style="background-image:url('<%=dish.getImagePath()%>');"></div>
                   <div class="menu-item-info">
                     <h3>
                       <%=dish.getName()%>
                     </h3>
                     <p>
-                      <%=dish.getDescription()%>
+                      <%=dish.getDescription() !=null && !dish.getDescription().equals("null") ? dish.getDescription()
+                        : "" %>
                     </p>
                     <span class="menu-item-price">
-                      <%=dish.getPrice()%>
+                      $<%=dish.getPrice()%>
                     </span>
                   </div>
                   <form action="${pageContext.request.contextPath}/cart" method="post" class="menu-item-control">
                     <input type="hidden" name="itemId" value="<%=dish.getDishId()%>">
-                    <input type="number" name="quantity" value="1" min="1" class="qty-input">
+                    <div class="qty-stepper">
+                      <button type="button" class="stepper-btn btn-minus" aria-label="Decrease quantity">-</button>
+                      <input type="number" name="quantity" value="1" min="1" class="qty-input">
+                      <button type="button" class="stepper-btn btn-plus" aria-label="Increase quantity">+</button>
+                    </div>
                     <button type="submit" class="btn-add">Add</button>
                   </form>
                 </div>
@@ -171,7 +176,7 @@
 
         </main>
 
-        <div class="cart-bar">
+        <div class="cart-bar" id="cartBar">
           <a href="${pageContext.request.contextPath}/cart" class="cart-bar-link">
             View cart
             <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5">

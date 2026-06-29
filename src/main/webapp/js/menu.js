@@ -42,4 +42,48 @@
     });
   }
 
+  /* Stepper controls (- and + buttons) */
+  var minusBtns = document.querySelectorAll('.btn-minus');
+  var plusBtns = document.querySelectorAll('.btn-plus');
+
+  minusBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var input = btn.parentElement.querySelector('.qty-input');
+      if(input){
+        var val = parseInt(input.value) || 1;
+        if(val > 1){
+          input.value = val - 1;
+        }
+      }
+    });
+  });
+
+  plusBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var input = btn.parentElement.querySelector('.qty-input');
+      if(input){
+        var val = parseInt(input.value) || 1;
+        input.value = val + 1;
+      }
+    });
+  });
+
+  /* Dynamic cart bar display logic */
+  var cartBar = document.getElementById('cartBar');
+  
+  // Show cart bar if item was previously added in session
+  if(cartBar && sessionStorage.getItem('bitehouse_has_added_item') === 'true'){
+    cartBar.classList.add('show');
+  }
+
+  var itemForms = document.querySelectorAll('.menu-item-control');
+  itemForms.forEach(function(form){
+    form.addEventListener('submit', function(){
+      sessionStorage.setItem('bitehouse_has_added_item', 'true');
+      if(cartBar){
+        cartBar.classList.add('show');
+      }
+    });
+  });
+
 })();
