@@ -29,6 +29,9 @@ public class CartDAOImpl implements CartDAO {
 	private static final String REMOVE_ITEM =
 			"DELETE FROM Platter.CartItem WHERE userId = ? AND dishId = ?";
 
+	private static final String CLEAR_CART =
+			"DELETE FROM Platter.CartItem WHERE userId = ?";
+
 	private static final String COUNT_ITEMS =
 			"SELECT COALESCE(SUM(quantity), 0) FROM Platter.CartItem WHERE userId = ?";
 
@@ -96,6 +99,17 @@ public class CartDAOImpl implements CartDAO {
 				PreparedStatement ps = con.prepareStatement(REMOVE_ITEM)) {
 			ps.setInt(1, userId);
 			ps.setInt(2, dishId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void clearCart(int userId) {
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement(CLEAR_CART)) {
+			ps.setInt(1, userId);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

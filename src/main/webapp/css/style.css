@@ -363,6 +363,11 @@ nav {
 		url("https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=700&q=70");
 }
 
+.card.delivery .card-photo {
+	background-image:
+		url("https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=700&q=70");
+}
+
 .card.tracking .card-photo {
 	background-image:
 		url("https://images.unsplash.com/photo-1686515913951-dde8f952ae0c?auto=format&fit=crop&w=700&q=70");
@@ -399,7 +404,7 @@ nav {
 	color: var(--text);
 }
 
-.card.restaurants h3, .card.tracking h3 {
+.card.restaurants h3, .card.delivery h3, .card.tracking h3 {
 	color: #FFFFFF;
 }
 
@@ -413,7 +418,7 @@ nav {
 	color: var(--text-muted);
 }
 
-.card.restaurants p, .card.tracking p {
+.card.restaurants p, .card.delivery p, .card.tracking p {
 	color: rgba(255, 255, 255, 0.75);
 }
 

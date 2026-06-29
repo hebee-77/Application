@@ -6,4 +6,5 @@ import com.Model.Dish;
 public interface DishDAO {
 	List<Dish> getDishesBySection(String section);
 	List<Dish> getDishesByRestaurantName(String restaurantName);
+	Dish getDish(int dishId);
 }

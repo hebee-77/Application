@@ -19,6 +19,9 @@ public class DishDAOImpl implements DishDAO {
 	private static final String SELECT_BY_RESTAURANT_QUERY =
 			"SELECT dishId, name, restaurantName, price, rating, imagePath, description, calories, isVeg, orderCount, deliveryTime, distance, tag, section FROM Platter.Dish WHERE restaurantName = ?";
 
+	private static final String SELECT_BY_ID_QUERY =
+			"SELECT dishId, name, restaurantName, price, rating, imagePath, description, calories, isVeg, orderCount, deliveryTime, distance, tag, section FROM Platter.Dish WHERE dishId = ?";
+
 	@Override
 	public List<Dish> getDishesBySection(String section) {
 		List<Dish> dishes = new ArrayList<>();
@@ -51,6 +54,22 @@ public class DishDAOImpl implements DishDAO {
 			e.printStackTrace();
 		}
 		return dishes;
+	}
+
+	@Override
+	public Dish getDish(int dishId) {
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement(SELECT_BY_ID_QUERY)) {
+			ps.setInt(1, dishId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return mapRow(rs);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private Dish mapRow(ResultSet rs) throws SQLException {

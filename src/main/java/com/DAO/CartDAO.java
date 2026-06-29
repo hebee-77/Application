@@ -8,6 +8,7 @@ public interface CartDAO {
 	void addOrIncrement(int userId, int dishId);   // insert qty=1, or qty=qty+1 if exists
 	void decrement(int userId, int dishId);        // qty-1, delete row if qty hits 0
 	void removeItem(int userId, int dishId);
+	void clearCart(int userId);                    // delete all items for user
 	int getCartItemCount(int userId);              // sum of all quantities for the user
 	int getCartTotal(int userId);                  // sum(quantity * price) via JOIN with Dish
 }

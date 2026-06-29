@@ -19,16 +19,15 @@
   int deliveryFee = (request.getAttribute("deliveryFee") != null) ? (Integer) request.getAttribute("deliveryFee") : 0;
   int taxes       = (request.getAttribute("taxes") != null) ? (Integer) request.getAttribute("taxes") : 0;
   int grandTotal  = (request.getAttribute("grandTotal") != null) ? (Integer) request.getAttribute("grandTotal") : 0;
-
-  boolean isEmpty = (cartItems == null || cartItems.isEmpty());
+  String restaurantName = (request.getAttribute("restaurantName") != null) ? (String) request.getAttribute("restaurantName") : "Restaurant";
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bite House — Your Cart</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart.css?v=<%= System.currentTimeMillis() %>">
+  <title>Bite House — Checkout</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/checkout.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body>
 
@@ -92,135 +91,119 @@
 <!-- ── MAIN ────────────────────────────────────────────────── -->
 <main class="wrap">
 
-  <a href="${pageContext.request.contextPath}/restaurants" class="back-link">
+  <a href="${pageContext.request.contextPath}/cart" class="back-link">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
       <path d="M19 12H5M11 18l-6-6 6-6"/>
     </svg>
-    Back to restaurants
+    Back to Cart
   </a>
 
-  <h1 class="page-title">Your cart</h1>
+  <h1 class="page-title">Checkout</h1>
 
-  <% if (isEmpty) { %>
-    <div class="empty-cart-container">
-      <div class="empty-cart-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-        </svg>
-      </div>
-      <h2>Your cart is empty</h2>
-      <p>Looks like you haven't added anything to your cart yet.</p>
-      <a href="${pageContext.request.contextPath}/restaurants" class="btn-primary">Browse Restaurants</a>
-    </div>
-  <% } else { %>
+  <form action="${pageContext.request.contextPath}/checkout" method="post" class="checkout-grid">
 
-    <div class="cart-grid">
+    <!-- ── Left Column: Delivery & Payment Details ── -->
+    <div class="checkout-main-col">
 
-      <!-- ── Left: Cart Items ── -->
-      <section class="cart-items">
-        <%
-          for (CartItem item : cartItems) {
-            Dish dish = (dishMap != null) ? dishMap.get(item.getDishId()) : null;
-            if (dish == null) continue;
-            int itemTotal = dish.getPrice() * item.getQuantity();
-        %>
-          <div class="cart-item">
-            <div class="cart-item-photo" style="background-image: url('<%= dish.getImagePath() %>');"></div>
-
-            <div class="cart-item-info">
-              <h3><%= dish.getName() %></h3>
-              <p class="cart-item-unit-price">&#8377;<%= dish.getPrice() %> each</p>
-            </div>
-
-            <div class="cart-item-controls">
-              <!-- Stepper -->
-              <div class="qty-stepper">
-                <form method="post" action="${pageContext.request.contextPath}/cart" class="inline-form">
-                  <input type="hidden" name="itemId" value="<%= dish.getDishId() %>">
-                  <input type="hidden" name="action" value="decrement">
-                  <button type="submit" class="step-btn btn-minus" aria-label="Decrease">&#8722;</button>
-                </form>
-
-                <span class="qty-display"><%= item.getQuantity() %></span>
-
-                <form method="post" action="${pageContext.request.contextPath}/cart" class="inline-form">
-                  <input type="hidden" name="itemId" value="<%= dish.getDishId() %>">
-                  <input type="hidden" name="action" value="increment">
-                  <button type="submit" class="step-btn btn-plus" aria-label="Increase">&#43;</button>
-                </form>
-              </div>
-
-              <span class="cart-item-line-total">&#8377;<%= itemTotal %></span>
-
-              <!-- Remove button -->
-              <form method="post" action="${pageContext.request.contextPath}/cart" class="inline-form">
-                <input type="hidden" name="itemId" value="<%= dish.getDishId() %>">
-                <input type="hidden" name="action" value="remove">
-                <button type="submit" class="remove-item-btn" aria-label="Remove item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6"/>
-                  </svg>
-                </button>
-              </form>
-            </div>
-          </div>
-        <% } %>
+      <!-- Address Card -->
+      <section class="checkout-card">
+        <div class="card-header">
+          <span class="step-num">1</span>
+          <h2>Delivery Address</h2>
+        </div>
+        <div class="input-group">
+          <label for="addressInput">Street Address &amp; Landmarks</label>
+          <textarea id="addressInput" name="address" rows="3" required placeholder="Enter your full delivery address">221B Baker Street, Camden, London NW1 6XE</textarea>
+        </div>
       </section>
 
-      <!-- ── Right: Order Summary ── -->
-      <aside class="cart-summary">
-
-        <div class="summary-card">
-          <h2>Order summary</h2>
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <span>&#8377;<%= subtotal %></span>
-          </div>
-          <div class="summary-row">
-            <span>Delivery fee</span>
-            <span>&#8377;<%= deliveryFee %></span>
-          </div>
-          <div class="summary-row">
-            <span>Taxes &amp; charges</span>
-            <span>&#8377;<%= taxes %></span>
-          </div>
-          <div class="summary-row summary-total">
-            <span>Total</span>
-            <span>&#8377;<%= grandTotal %></span>
-          </div>
+      <!-- Payment Method Card -->
+      <section class="checkout-card">
+        <div class="card-header">
+          <span class="step-num">2</span>
+          <h2>Payment Method</h2>
         </div>
-
-        <div class="summary-card">
-          <div class="summary-card-header">
-            <h2>Delivery address</h2>
-            <a href="#" class="link-text">Change</a>
-          </div>
-          <p class="address-text">221B Baker Street, Camden, London NW1 6XE</p>
+        <div class="payment-options-list">
+          <label class="payment-radio-card">
+            <input type="radio" name="paymentMethod" value="cod" checked>
+            <div class="radio-card-content">
+              <span class="pay-title">Cash on Delivery</span>
+              <span class="pay-desc">Pay cash when your order arrives</span>
+            </div>
+          </label>
+          <label class="payment-radio-card">
+            <input type="radio" name="paymentMethod" value="upi">
+            <div class="radio-card-content">
+              <span class="pay-title">UPI / QR Code</span>
+              <span class="pay-desc">GPay, PhonePe, Paytm, BHIM</span>
+            </div>
+          </label>
+          <label class="payment-radio-card">
+            <input type="radio" name="paymentMethod" value="card">
+            <div class="radio-card-content">
+              <span class="pay-title">Credit / Debit Card</span>
+              <span class="pay-desc">Visa, Mastercard, RuPay</span>
+            </div>
+          </label>
         </div>
+      </section>
 
-        <form action="${pageContext.request.contextPath}/checkout" method="post">
-          <div class="summary-card">
-            <h2>Payment method</h2>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="cod" checked> Cash on delivery
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="card"> Credit / debit card
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="upi"> UPI
-            </label>
-          </div>
-
-          <button type="submit" class="btn-primary full">Place Order (&#8377;<%= grandTotal %>)</button>
-        </form>
-
-      </aside>
+      <!-- Review Items Card -->
+      <section class="checkout-card">
+        <div class="card-header">
+          <span class="step-num">3</span>
+          <h2>Review Items (<%= restaurantName %>)</h2>
+        </div>
+        <div class="checkout-items-list">
+          <%
+            if (cartItems != null) {
+              for (CartItem item : cartItems) {
+                Dish dish = (dishMap != null) ? dishMap.get(item.getDishId()) : null;
+                if (dish == null) continue;
+                int lineTotal = dish.getPrice() * item.getQuantity();
+          %>
+            <div class="checkout-item-row">
+              <div class="item-info">
+                <span class="item-name"><%= dish.getName() %> &times; <%= item.getQuantity() %></span>
+                <span class="item-unit">&#8377;<%= dish.getPrice() %> each</span>
+              </div>
+              <span class="item-price">&#8377;<%= lineTotal %></span>
+            </div>
+          <%   }
+            }
+          %>
+        </div>
+      </section>
 
     </div>
 
-  <% } %>
+    <!-- ── Right Column: Summary & Place Order Button ── -->
+    <aside class="checkout-side-col">
+      <div class="summary-card">
+        <h2>Payment Summary</h2>
+        <div class="summary-row">
+          <span>Items Subtotal</span>
+          <span>&#8377;<%= subtotal %></span>
+        </div>
+        <div class="summary-row">
+          <span>Delivery Fee</span>
+          <span>&#8377;<%= deliveryFee %></span>
+        </div>
+        <div class="summary-row">
+          <span>Taxes &amp; Platform Fee</span>
+          <span>&#8377;<%= taxes %></span>
+        </div>
+        <div class="summary-row summary-total">
+          <span>Amount Payable</span>
+          <span>&#8377;<%= grandTotal %></span>
+        </div>
+
+        <button type="submit" class="btn-primary full">Confirm &amp; Place Order (&#8377;<%= grandTotal %>)</button>
+        <p class="terms-note">By placing your order, you agree to Bite House Terms of Service.</p>
+      </div>
+    </aside>
+
+  </form>
 
 </main>
 
