@@ -1,0 +1,475 @@
+:root {
+	--bg: #071014;
+	--surface: #0A1F24;
+	--panel: #10252B;
+	--mint: #B8F2E6;
+	--mint-dark: #04342C;
+	--text: #FFFFFF;
+	--text-muted: rgba(255, 255, 255, .68);
+	--text-faint: rgba(255, 255, 255, .45);
+	--border: rgba(184, 242, 230, .12);
+	--shadow: 0 30px 80px rgba(0, 0, 0, .35);
+}
+
+/* ================= BASE ================= */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+/* ================= BACKGROUND ================= */
+.background-glow {
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background: radial-gradient(circle at 75% 20%, rgba(184, 242, 230, .18),
+		transparent 30%),
+		radial-gradient(circle at 15% 85%, rgba(28, 107, 106, .25),
+		transparent 40%), linear-gradient(180deg, #071014, #050b0d);
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+	width: 100%;
+	height: 90px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 80px;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.brand-icon {
+	width: 42px;
+	height: 42px;
+	border-radius: 12px;
+	background: var(--mint);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--mint-dark);
+	font-size: 20px;
+}
+
+.brand span {
+	font-size: 22px;
+	font-weight: 700;
+}
+
+nav {
+	display: flex;
+	gap: 40px;
+}
+
+nav a {
+	text-decoration: none;
+	color: var(--text-muted);
+	font-size: 15px;
+	transition: .25s;
+}
+
+nav a:hover {
+	color: var(--text);
+}
+
+/* ================= MAIN LAYOUT ================= */
+.auth-container {
+	width: 100%;
+	flex: 1;
+	min-height: 0;
+	display: grid;
+	grid-template-columns: 1.4fr .9fr;
+	padding: clamp(10px, 2vh, 20px) 80px clamp(15px, 4vh, 50px);
+}
+
+/* ================= LEFT SIDE ================= */
+.hero {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 0;
+}
+
+.hero-content {
+	max-width: 620px;
+}
+
+.eyebrow {
+	display: inline-flex;
+	padding: 10px 18px;
+	border-radius: 999px;
+	background: rgba(184, 242, 230, .08);
+	border: 1px solid var(--border);
+	color: var(--mint);
+	font-size: 14px;
+	margin-bottom: clamp(15px, 3vh, 35px);
+}
+
+.hero h1 {
+	font-size: clamp(38px, 6.8vh, 82px);
+	line-height: 1.05;
+	font-weight: 800;
+	letter-spacing: -3px;
+}
+
+.hero h1 span {
+	color: var(--mint);
+}
+
+.hero p {
+	width: 100%;
+	max-width: 500px;
+	margin-top: clamp(12px, 2.5vh, 30px);
+	font-size: clamp(15px, 1.8vh, 18px);
+	color: var(--text-muted);
+	line-height: 1.6;
+}
+
+/* ================= PILLS ================= */
+.hero-pills {
+	display: flex;
+	gap: clamp(10px, 1.5vw, 18px);
+	margin-top: clamp(15px, 3vh, 40px);
+	flex-wrap: wrap;
+}
+
+.pill {
+	padding: clamp(8px, 1.2vh, 12px) clamp(16px, 2vw, 22px);
+	border-radius: 999px;
+	background: rgba(184, 242, 230, .95);
+	color: var(--mint-dark);
+	font-size: clamp(12px, 1.4vh, 14px);
+	font-weight: 700;
+}
+
+/* ================= IMAGE ================= */
+.hero-image {
+	width: 90%;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+	border-radius: 28px;
+	margin-top: clamp(15px, 3vh, 30px);
+	border: 1px solid var(--border);
+}
+
+.hero-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ================= RIGHT SIDE ================= */
+.auth-panel {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 0;
+}
+
+.auth-box {
+	width: 420px;
+	padding: clamp(30px, 5.5vh, 50px) clamp(20px, 3.2vw, 35px);
+	border-radius: 32px;
+	background: rgba(10, 31, 36, .78);
+	backdrop-filter: blur(24px);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow);
+}
+
+.auth-box h2 {
+	font-size: clamp(30px, 4vh, 42px);
+	margin-bottom: clamp(8px, 1.2vh, 12px);
+}
+
+.auth-box p {
+	color: var(--text-muted);
+	margin-bottom: clamp(22px, 3.8vh, 36px);
+	font-size: clamp(14px, 1.6vh, 16px);
+}
+
+/* ================= FORM ================= */
+.input-group {
+	margin-bottom: clamp(14px, 2.2vh, 22px);
+}
+
+label {
+	display: block;
+	margin-bottom: clamp(6px, 1vh, 10px);
+	font-size: clamp(12px, 1.4vh, 14px);
+}
+
+input {
+	width: 100%;
+	height: clamp(48px, 6vh, 58px);
+	border: none;
+	outline: none;
+	padding: 0 22px;
+	border-radius: 18px;
+	background: var(--panel);
+	color: var(--text);
+	font-size: clamp(14.5px, 1.7vh, 16.5px);
+	transition: .25s;
+}
+
+input:focus {
+	border: 1px solid var(--mint);
+	box-shadow: 0 0 0 4px rgba(184, 242, 230, .08);
+}
+
+input::placeholder {
+	color: var(--text-faint);
+}
+
+/* ================= PASSWORD ================= */
+.password-container {
+	position: relative;
+}
+
+#togglePassword {
+	position: absolute;
+	right: 18px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+/* ================= ROW ================= */
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: clamp(18px, 2.8vh, 30px);
+	font-size: clamp(13px, 1.5vh, 14px);
+}
+
+.row label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.row input {
+	width: 16px;
+	height: 16px;
+}
+
+.row a {
+	text-decoration: none;
+	color: var(--mint);
+}
+
+/* ================= BUTTONS ================= */
+.primary-btn {
+	width: 100%;
+	height: clamp(48px, 6.2vh, 60px);
+	border: none;
+	border-radius: 999px;
+	background: var(--mint);
+	color: var(--mint-dark);
+	font-size: clamp(14.5px, 1.8vh, 17px);
+	font-weight: 700;
+	cursor: pointer;
+	transition: .25s;
+}
+
+.primary-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 18px 40px rgba(184, 242, 230, .18);
+}
+
+.divider {
+	display: flex;
+	justify-content: center;
+	margin: clamp(15px, 2.8vh, 28px) 0;
+	color: var(--text-faint);
+	font-size: clamp(12px, 1.4vh, 14px);
+}
+
+.google-btn {
+	width: 100%;
+	height: clamp(48px, 6.2vh, 60px);
+	border-radius: 999px;
+	border: 1px solid var(--mint);
+	background: transparent;
+	color: var(--mint);
+	font-size: clamp(14.5px, 1.7vh, 16px);
+	cursor: pointer;
+}
+
+.bottom-text {
+	margin-top: clamp(20px, 3vh, 30px);
+	text-align: center;
+	color: var(--text-muted);
+	font-size: clamp(13px, 1.5vh, 15px);
+}
+
+.bottom-text a {
+	color: var(--mint);
+	text-decoration: none;
+}
+
+/* ================= TABLET ================= */
+@media ( max-width :1200px) {
+	html, body {
+		overflow: auto;
+		height: auto;
+	}
+	.auth-container {
+		grid-template-columns: 1fr;
+		height: auto;
+		flex: none;
+		padding: 20px 40px 40px;
+	}
+	.hero-image {
+		display: none;
+	}
+	.hero {
+		margin-bottom: 50px;
+	}
+	.auth-box {
+		width: 100%;
+		max-width: 500px;
+	}
+}
+
+/* ================= MOBILE ================= */
+@media ( max-width :768px) {
+	.navbar {
+		padding: 0 25px;
+	}
+	nav {
+		display: none;
+	}
+	.auth-container {
+		padding: 20px;
+	}
+	.hero h1 {
+		font-size: 52px;
+		letter-spacing: -2px;
+	}
+	.hero p {
+		width: 100%;
+	}
+	.auth-box {
+		padding: 30px;
+	}
+	.hero-pills {
+		gap: 10px;
+	}
+	.pill {
+		font-size: 13px;
+	}
+}
+
+/* ================= SMALL MOBILE ================= */
+@media ( max-width :480px) {
+	.hero h1 {
+		font-size: 42px;
+	}
+	.auth-box h2 {
+		font-size: 34px;
+	}
+}
+
+/* ================= PAGE ANIMATIONS ================= */
+
+.hero{
+
+opacity:0;
+
+transform:translateX(-50px);
+
+transition:.8s ease;
+
+}
+
+.auth-box{
+
+opacity:0;
+
+transform:translateX(50px);
+
+transition:.8s ease;
+
+}
+
+.hero.show{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+.auth-box.show{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+.pill{
+
+animation:float 5s ease-in-out infinite;
+
+}
+
+.pill:nth-child(2){
+
+animation-delay:.5s;
+
+}
+
+.pill:nth-child(3){
+
+animation-delay:1s;
+
+}
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-6px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
