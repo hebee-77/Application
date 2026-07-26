@@ -360,17 +360,17 @@ nav {
 
 .card.restaurants .card-photo {
 	background-image:
-		url("https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=700&q=70");
+		url("../images/restaurants/pizza.jpg");
 }
 
 .card.delivery .card-photo {
 	background-image:
-		url("https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=700&q=70");
+		url("../images/restaurants/burger.jpg");
 }
 
 .card.tracking .card-photo {
 	background-image:
-		url("https://images.unsplash.com/photo-1686515913951-dde8f952ae0c?auto=format&fit=crop&w=700&q=70");
+		url("../images/hero/rider.png");
 }
 
 .card-icon {

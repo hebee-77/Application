@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="hero-visual">
-      <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80" alt="Food delivery agent on time" class="hero-photo">
+      <img src="${pageContext.request.contextPath}/images/hero/rider.png" alt="Food delivery agent on time" class="hero-photo">
       <div class="float-pill eta">12 min away</div>
       <div class="float-pill live"><span class="dot"></span>Live</div>
     </div>
